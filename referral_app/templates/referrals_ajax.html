@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Referral Lookup {% endblock %}
+
+{% block content %}
+    <h2 class="mt-4">Referral Lookup </h2>
+
+    <div class="form-inline mb-4">
+        <input type="text" id="referralCodeInput" class="form-control mr-2" placeholder="Enter referral code">
+        <button id="searchBtn" class="btn btn-primary">Search</button>
+    </div>
+
+    <div id="resultSection"></div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#searchBtn').on('click', function () {
+        const code = $('#referralCodeInput').val().trim();
+        if (!code) {
+            $('#resultSection').html('<div class="alert alert-warning">Please enter a referral code.</div>');
+            return;
+        }
+
+        $.ajax({
+            url: '/api/referrals/',
+            type: 'GET',
+            data: { referral_code: code },
+            success: function (data) {
+                if (data.length === 0) {
+                    $('#resultSection').html('<div class="alert alert-info">No referred users found for code: <strong>' + code + '</strong></div>');
+                } else {
+                    let html = `
+                        <h4>Users referred by <code>${code}</code>:</h4>
+                        <table class="table table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Registration Date & Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                    data.forEach(user => {
+                        html += `
+                            <tr>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.registration_date_time}</td>
+                            </tr>
+                        `;
+                    });
+
+                    html += `</tbody></table>`;
+                    $('#resultSection').html(html);
+                }
+            },
+            error: function (err) {
+                $('#resultSection').html('<div class="alert alert-danger">Something went wrong. Please try again.</div>');
+            }
+        });
+    });
+</script>
+{% endblock %}

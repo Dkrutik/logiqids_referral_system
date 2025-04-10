@@ -55,3 +55,26 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         return JsonResponse({'message': 'Logout successful'})
+    
+
+@csrf_exempt
+def referral_view(request):
+    if request.method == 'GET':
+        referral_code = request.GET.get('referral_code')
+
+        if not referral_code:
+            return JsonResponse({'error': 'Referral code is required.'}, status=400)
+
+        referred_users = CustomUser.objects.filter(referral_code=referral_code)
+
+        data = []
+        for user in referred_users:
+            data.append({
+                'name': user.name,
+                'email': user.email,
+                'registration_date_time': user.date_joined.strftime('%Y-%m-%d %H:%M:%S')
+            })
+
+        return JsonResponse(data, safe=False)
+
+    return JsonResponse({'error': 'Only GET method is allowed.'}, status=405)
