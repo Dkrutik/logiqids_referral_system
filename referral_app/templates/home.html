@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center">Welcome Home!</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Your Details</h5>
+            <p id="user-email"><strong>Email:</strong> Loading...</p>
+            <p id="user-name"><strong>Name:</strong> Loading...</p>
+            <p id="user-city"><strong>City:</strong> Loading...</p>
+            <p id="user-referral-code"><strong>Referral Code:</strong> Loading...</p>
+            <p id="user-generated-code"><strong>Generated Code:</strong> Loading...</p>
+            <form id="logout-form" method="post" action="/api/logout/">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            document.getElementById('user-email').textContent = `Email: ${user.email}`;
+            document.getElementById('user-name').textContent = `Name: ${user.name}`;
+            document.getElementById('user-city').textContent = `City: ${user.city}`;
+            document.getElementById('user-referral-code').textContent = `Referral Code: ${user.referral_code}`;
+            document.getElementById('user-generated-code').textContent = `Generated Code: ${user.generated_code}`;
+        }
+    });
+</script>
+{% endblock %}
