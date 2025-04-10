@@ -66,3 +66,10 @@ Rate limiting for abuse prevention
 Referral dashboard analytics
 
 
+
+
+![Screenshot 2025-04-10 163030](https://github.com/user-attachments/assets/348658f1-0805-4e98-8cd7-83c42aaec3f8)
+![Screenshot 2025-04-10 112250](https://github.com/user-attachments/assets/222083ba-e782-4f00-bfbc-26f766569428)
+![Screenshot 2025-04-10 112238](https://github.com/user-attachments/assets/b06b95e7-e09a-49d8-8be6-21d7b6737e17)
+![Screenshot 2025-04-10 112224](https://github.com/user-attachments/assets/6602706e-11c5-4801-934b-c173f227a602)
+![Screenshot 2025-04-10 112211](https://github.com/user-attachments/assets/406346c1-7480-49bc-83d3-846e6e88212c)
